@@ -1,4 +1,5 @@
 const exec = require('child_process').exec;
+const crypto = require('crypto');
 
 const path = require('path');
 
@@ -7,6 +8,14 @@ const PLUGIN_ID = require('../plugin.json').id;
 const NPM_TARGET = process.env.npm_lifecycle_event; //eslint-disable-line no-process-env
 const isDev = NPM_TARGET === 'debug' || NPM_TARGET === 'debug:watch';
 
+/*
+ Ugly hack to support node versions above 16. New versions of node does not  support md4 algoritm in crypto
+*/
+const nodeVersion = process.version.split('.')[0].substring(1);
+if (nodeVersion > '16') {
+    const crypto_orig_createHash = crypto.createHash;
+    crypto.createHash = (algorithm) => crypto_orig_createHash(algorithm === 'md4' ? 'sha256' : algorithm);
+}
 const plugins = [];
 if (NPM_TARGET === 'build:watch' || NPM_TARGET === 'debug:watch') {
     plugins.push({
@@ -91,7 +100,9 @@ const config = {
         path: path.join(__dirname, '/dist'),
         publicPath: '/',
         filename: 'main.js',
+
     },
+
     mode: (isDev) ? 'eval-source-map' : 'production',
     plugins,
 };
