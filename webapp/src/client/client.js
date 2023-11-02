@@ -23,7 +23,7 @@ export default class Client {
     startMeeting = async () => {
         const nonce = Math.round(Date.now() / 1000);
         const path = '/api/token';
-        const roomId = this.getSetting('Workspace') + ':TheRoom';
+        const roomId = this.getSetting('Prefix') + ':TheRoom';
         const body =
         {
             roomId,
@@ -63,8 +63,10 @@ export default class Client {
             update(`${path}:${data}:${nonce}`).
             digest('hex');
 
+        const buf = Buffer.from(this.getSetting('APIKey'), 'base64');
+
         const key = crypto.createPrivateKey({
-            key: new Buffer(this.getSetting('APISecret'), 'base64'),
+            key: buf,
         });
 
         const token = crypto.sign(null, hash, key).toString('hex');
@@ -77,7 +79,7 @@ export default class Client {
         };
 
         const res = await doPost(`${this.settings.CompodiumAPIURL}${path}`, data, headers);
-        return res.meeting_url;
+        return res;
     };
 }
 

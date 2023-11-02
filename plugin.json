@@ -6,7 +6,7 @@
     "support_url": "https://github.com/janostgren/mm-compodium-plugin/issues",
     "release_notes_url": "https://github.com/janostgren/mm-compodium-plugin/releases/tag/v0.1.0",
     "icon_path": "assets/starter-template-icon.svg",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "min_server_version": "7.5.1",
     "server": {
         "executables": {
@@ -49,10 +49,10 @@
                 "default": null
             },
             {
-                "key": "Workspace",
-                "display_name": "Workspace:",
+                "key": "Prefix",
+                "display_name": "Prefix:",
                 "type": "text",
-                "help_text": "The workspace for the meeting",
+                "help_text": "The prefix defined for the room in configuration",
                 "placeholder": "",
                 "default": null
             },

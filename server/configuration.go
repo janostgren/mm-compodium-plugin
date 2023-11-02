@@ -18,6 +18,11 @@ import (
 // If you add non-reference types to your configuration struct, be sure to rewrite Clone as a deep
 // copy appropriate for your types.
 type configuration struct {
+	CompodiumAPIURL string
+	APIKey          string
+	APISecret       string
+	Prefix          string
+	UserId          string
 }
 
 // Clone shallow copies the configuration. Your implementation may require a deep copy if
@@ -79,5 +84,24 @@ func (p *Plugin) OnConfigurationChange() error {
 
 	p.setConfiguration(configuration)
 
+	return nil
+}
+
+func (c *configuration) IsValid() error {
+
+	switch {
+	case len(c.APIKey) == 0:
+		return errors.New("please configure APIKey")
+
+	case len(c.APISecret) == 0:
+		return errors.New("please configure APISecret")
+	case len(c.Prefix) == 0:
+		return errors.New("please configure Prefix")
+	case len(c.UserId) == 0:
+		return errors.New("please configure UserId")
+	}
+	}
+	
+	
 	return nil
 }

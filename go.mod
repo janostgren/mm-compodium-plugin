@@ -3,6 +3,7 @@ module github.com/example/my-plugin
 go 1.19
 
 require (
+	github.com/99designs/httpsignatures-go v0.0.0-20170731043157-88528bf4ca7e
 	github.com/mattermost/mattermost/server/public v0.0.6
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
