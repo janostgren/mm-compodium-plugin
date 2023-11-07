@@ -13,18 +13,13 @@ import (
 	"github.com/gorilla/mux"
 
 	pluginapi "github.com/mattermost/mattermost-plugin-api"
-
 	"github.com/mattermost/mattermost-server/v6/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-
+	"github.com/mattermost/mattermost-server/v6/plugin"
 	/*
 		"github.com/mattermost/mattermost/server/public/model"
 		"github.com/mattermost/mattermost/server/public/plugin"
 		"github.com/mattermost/mattermost/server/public/pluginapi"
-	*/
-
-	"github.com/mattermost/mattermost-plugin-api/experimental/telemetry"
-)
+	*/)
 
 const (
 	botUserName    = "compodium"
@@ -34,7 +29,7 @@ const (
 	trueString  = "true"
 	falseString = "false"
 
-	zoomProviderName = "Zoom"
+	//zoomProviderName = "Zoom"
 )
 
 type Plugin struct {
@@ -57,12 +52,13 @@ type Plugin struct {
 
 	siteURL string
 
-	telemetryClient telemetry.Client
-	tracker         telemetry.Tracker
+	//telemetryClient telemetry.Client
+	//tracker         telemetry.Tracker
 }
 
 // OnActivate checks if the configurations is valid and ensures the bot account exists
 func (p *Plugin) OnActivate() error {
+
 	p.client = pluginapi.NewClient(p.API, p.Driver)
 
 	p.client.System.GetBundlePath()
@@ -107,22 +103,10 @@ func (p *Plugin) OnActivate() error {
 		return errors.Wrap(appErr, "couldn't set profile image")
 	}
 
-	p.telemetryClient, err = telemetry.NewRudderClient()
-	if err != nil {
-		p.API.LogWarn("telemetry client not started", "error", err.Error())
-	}
-
 	return nil
 }
 
 func (p *Plugin) OnDeactivate() error {
-	if p.telemetryClient != nil {
-		err := p.telemetryClient.Close()
-		if err != nil {
-			p.API.LogWarn("OnDeactivate: failed to close telemetryClient", "error", err.Error())
-		}
-	}
-
 	return nil
 }
 
