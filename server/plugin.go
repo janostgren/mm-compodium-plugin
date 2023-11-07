@@ -10,10 +10,20 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/gorilla/mux"
+
 	pluginapi "github.com/mattermost/mattermost-plugin-api"
-	"github.com/mattermost/mattermost-plugin-api/experimental/telemetry"
+
 	"github.com/mattermost/mattermost-server/v6/model"
-	"github.com/mattermost/mattermost-server/v6/plugin"
+	"github.com/mattermost/mattermost/server/public/plugin"
+
+	/*
+		"github.com/mattermost/mattermost/server/public/model"
+		"github.com/mattermost/mattermost/server/public/plugin"
+		"github.com/mattermost/mattermost/server/public/pluginapi"
+	*/
+
+	"github.com/mattermost/mattermost-plugin-api/experimental/telemetry"
 )
 
 const (
@@ -30,6 +40,10 @@ const (
 type Plugin struct {
 	plugin.MattermostPlugin
 	client *pluginapi.Client
+
+	router *mux.Router
+
+	conf configuration
 
 	// botUserID of the created bot account.
 	botUserID string
@@ -51,13 +65,7 @@ type Plugin struct {
 func (p *Plugin) OnActivate() error {
 	p.client = pluginapi.NewClient(p.API, p.Driver)
 
-	//config := p.getConfiguration()
-
-	/*
-		if err := config.IsValid(p.isCloudLicense()); err != nil {
-			return err
-		}
-	*/
+	p.client.System.GetBundlePath()
 
 	if err := p.registerSiteURL(); err != nil {
 		return errors.Wrap(err, "could not register site URL")

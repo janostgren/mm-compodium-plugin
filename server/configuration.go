@@ -100,8 +100,6 @@ func (c *configuration) IsValid() error {
 	case len(c.UserId) == 0:
 		return errors.New("please configure UserId")
 	}
-	}
-	
-	
+
 	return nil
 }

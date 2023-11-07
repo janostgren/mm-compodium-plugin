@@ -51,6 +51,7 @@ ifneq ($(HAS_WEBAPP),)
 	cd webapp && npm run check-types
 endif
 
+
 ifneq ($(HAS_SERVER),)
 	@if ! [ -x "$$(command -v golangci-lint)" ]; then \
 		echo "golangci-lint is not installed. Please see https://github.com/golangci/golangci-lint#install for installation instructions."; \

@@ -6,29 +6,23 @@ import * as crypto from 'crypto';
 import {Client4} from 'mattermost-redux/client';
 import {ClientError} from 'mattermost-redux/client/client4';
 
-import {id, settings_schema} from '../manifest';
+import {getSettings} from '../actions';
 
 export default class Client {
-    setServerRoute(url) {
-        this.url = url + '/plugins/' + id;
-        this.settings = settings_schema.settings;
-    }
-    getSetting(key) {
-        const found = this.settings.find((element) => {
-            return element.key === key;
-        });
-        return found || '';
+    async getConfigSettings() {
+        return getSettings();
     }
 
     startMeeting = async () => {
+        const settings = await this.getConfigSettings();
         const nonce = Math.round(Date.now() / 1000);
         const path = '/api/token';
-        const roomId = this.getSetting('Prefix') + ':TheRoom';
+        const roomId = settings.prefix + ':TheRoom';
         const body =
         {
             roomId,
             roomName: 'The room nname',
-            userId: this.getSetting('UserId'),
+            userId: settings.user_id,
             role: 'guest',
             useLobby: false,
             estimatedNumberOfParticipants: 0,
@@ -63,7 +57,7 @@ export default class Client {
             update(`${path}:${data}:${nonce}`).
             digest('hex');
 
-        const buf = Buffer.from(this.getSetting('APIKey'), 'base64');
+        const buf = Buffer.from(settings.api_secret, 'base64');
 
         const key = crypto.createPrivateKey({
             key: buf,
@@ -75,10 +69,10 @@ export default class Client {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
             'X-Vidicue-Nonce': nonce,
-            'X-Vidicue-Key': this.getSetting('APIKey'),
+            'X-Vidicue-Key': settings.api_key,
         };
 
-        const res = await doPost(`${this.settings.CompodiumAPIURL}${path}`, data, headers);
+        const res = await doPost(`${settings.compodium_api_url}${path}`, data, headers);
         return res;
     };
 }
