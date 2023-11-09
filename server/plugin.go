@@ -15,7 +15,12 @@ import (
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/plugin"
 	"github.com/mattermost/mattermost/server/public/pluginapi"
-)
+	/*
+		pluginapi "github.com/mattermost/mattermost-plugin-api"
+		//"github.com/mattermost/mattermost-plugin-api/experimental/telemetry"
+		"github.com/mattermost/mattermost-server/v6/model"
+		"github.com/mattermost/mattermost-server/v6/plugin"
+	*/)
 
 const (
 	botUserName    = "compodium"
