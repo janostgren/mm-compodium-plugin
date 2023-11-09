@@ -1,9 +1,9 @@
-module github.com/example/my-plugin
+module github.com/janostgren/mm-compodium-plugin
 
-go 1.19
+go 1.21.0
 
 require (
-	github.com/99designs/httpsignatures-go v0.0.0-20170731043157-88528bf4ca7e
+	github.com/mattermost/mattermost-server/v6 v6.0.0-20221012175353-8cb6718a9bcc
 	github.com/mattermost/mattermost/server/public v0.0.9
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
@@ -15,20 +15,13 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/klauspost/cpuid/v2 v2.1.0 // indirect
-	github.com/mattermost/mattermost-server/v6 v6.0.0-20221012175353-8cb6718a9bcc // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
 	github.com/minio/minio-go/v7 v7.0.34 // indirect
 	github.com/minio/sha256-simd v1.0.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/rs/xid v1.4.0 // indirect
-	github.com/rudderlabs/analytics-go v3.3.3+incompatible // indirect
-	github.com/segmentio/backo-go v1.0.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
-	github.com/tidwall/gjson v1.14.3 // indirect
-	github.com/tidwall/match v1.1.1 // indirect
-	github.com/tidwall/pretty v1.2.0 // indirect
-	github.com/xtgo/uuid v0.0.0-20140804021211-a0b114877d4c // indirect
 	github.com/yuin/goldmark v1.4.13 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 )
@@ -53,7 +46,6 @@ require (
 	github.com/mattermost/go-i18n v1.11.1-0.20211013152124-5c415071e404 // indirect
 	github.com/mattermost/ldap v0.0.0-20201202150706-ee0e6284187d // indirect
 	github.com/mattermost/logr/v2 v2.0.16 // indirect
-	github.com/mattermost/mattermost-plugin-api v0.1.4
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mitchellh/go-testing-interface v1.14.1 // indirect
