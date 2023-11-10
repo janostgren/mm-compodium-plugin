@@ -1,6 +1,6 @@
 module github.com/janostgren/mm-compodium-plugin
 
-go 1.19.0
+go 1.20
 
 require (
 	github.com/gorilla/mux v1.8.1
