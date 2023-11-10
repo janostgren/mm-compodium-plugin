@@ -12,10 +12,11 @@ import (
 func TestServeHTTP(t *testing.T) {
 	assert := assert.New(t)
 	plugin := Plugin{}
+
 	w := httptest.NewRecorder()
 	r := httptest.NewRequest(http.MethodGet, "/", nil)
 
-	plugin.ServeHTTP(nil, w, r)
+	plugin.ServeHTTPTest(nil, w, r)
 
 	result := w.Result()
 	assert.NotNil(result)

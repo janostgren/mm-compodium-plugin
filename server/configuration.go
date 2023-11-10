@@ -88,8 +88,9 @@ func (p *Plugin) OnConfigurationChange() error {
 }
 
 func (c *configuration) IsValid() error {
-
 	switch {
+	case len(c.CompodiumAPIURL) == 0:
+		return errors.New("please configure Compodium API URL")
 	case len(c.APIKey) == 0:
 		return errors.New("please configure APIKey")
 
@@ -100,6 +101,5 @@ func (c *configuration) IsValid() error {
 	case len(c.UserId) == 0:
 		return errors.New("please configure UserId")
 	}
-
 	return nil
 }

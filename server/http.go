@@ -1,10 +1,12 @@
 // Copyright (c) 2017-present Mattermost, Inc. All Rights Reserved.
 // See License for license information.
 
+//nolint:unused,gofmt,goimports
 package main
 
 import (
 	"encoding/json"
+
 	"net/http"
 
 	"runtime/debug"
@@ -31,15 +33,15 @@ func (p *Plugin) initializeRouter() {
 	p.router = mux.NewRouter()
 	p.router.Use(p.withRecovery)
 
-	//instanceRouter := p.router.PathPrefix(routeInstancePath).Subrouter()
+	// instanceRouter := p.router.PathPrefix(routeInstancePath).Subrouter()
 
 	apiRouter := p.router.PathPrefix(routeAPI).Subrouter()
 	// User APIs
 
 	apiRouter.HandleFunc(routeAPISettingsInfo, p.checkAuth(p.handleResponse(p.httpGetSettingsInfo))).Methods(http.MethodGet)
-
 }
 
+//nolint:golint,revive
 func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
 	p.router.ServeHTTP(w, r)
 }

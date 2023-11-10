@@ -6,7 +6,7 @@
     "support_url": "https://github.com/janostgren/mm-compodium-plugin/issues",
     "release_notes_url": "https://github.com/janostgren/mm-compodium-plugin/releases/tag/v0.1.0",
     "icon_path": "assets/starter-template-icon.svg",
-    "version": "0.1.2",
+    "version": "0.1.5",
     "min_server_version": "7.5.1",
     "server": {
         "executables": {
@@ -30,7 +30,7 @@
                 "type": "text",
                 "help_text": "The API URL for a self-hosted private cloud or on-prem Compodium server. For example, https://room.compodium.com",
                 "placeholder": "https://room.compodium.com",
-                "default": null
+                "default": "https://room.compodium.com"
             },
             {
                 "key": "APIKey",
@@ -62,7 +62,7 @@
                 "type": "text",
                 "help_text": "The user id for the admin user.",
                 "placeholder": "",
-                "default": null
+                "default": "1"
             }
         ]
     }

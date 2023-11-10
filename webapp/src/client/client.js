@@ -17,10 +17,10 @@ export default class Client {
         const settings = await this.getConfigSettings();
         const nonce = Math.round(Date.now() / 1000);
         const path = '/api/token';
-        const roomId = settings.prefix + ':TheRoom';
+        const myRoomId = settings.prefix + ':TheRoom';
         const body =
         {
-            roomId,
+            roomId: myRoomId,
             roomName: 'The room nname',
             userId: settings.user_id,
             role: 'guest',

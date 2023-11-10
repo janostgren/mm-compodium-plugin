@@ -42,6 +42,8 @@ issues:
     - path: server/configuration.go
       linters:
         - unused
+        - revive
+        - stylecheck
     - path: _test\.go
       linters:
         - bodyclose

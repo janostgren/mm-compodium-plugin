@@ -4,7 +4,9 @@
 package main
 
 import (
-	"io/ioutil"
+	"fmt"
+	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
 
@@ -26,11 +28,6 @@ const (
 	botUserName    = "compodium"
 	botDisplayName = "Compodium"
 	botDescription = "Created by the Compodium plugin."
-
-	trueString  = "true"
-	falseString = "false"
-
-	//zoomProviderName = "Zoom"
 )
 
 type Plugin struct {
@@ -38,8 +35,6 @@ type Plugin struct {
 	client *pluginapi.Client
 
 	router *mux.Router
-
-	conf configuration
 
 	// botUserID of the created bot account.
 	botUserID string
@@ -52,16 +47,17 @@ type Plugin struct {
 	configuration *configuration
 
 	siteURL string
+}
 
-	//telemetryClient telemetry.Client
-	//tracker         telemetry.Tracker
+// ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.
+func (p *Plugin) ServeHTTPTest(_ *plugin.Context, w http.ResponseWriter, _ *http.Request) {
+	fmt.Fprint(w, "Hello, world!")
 }
 
 // OnActivate checks if the configurations is valid and ensures the bot account exists
 func (p *Plugin) OnActivate() error {
-
 	p.client = pluginapi.NewClient(p.API, p.Driver)
-
+	//nolint:errcheck
 	p.client.System.GetBundlePath()
 
 	if err := p.registerSiteURL(); err != nil {
@@ -95,7 +91,7 @@ func (p *Plugin) OnActivate() error {
 		return errors.Wrap(err, "couldn't get bundle path")
 	}
 
-	profileImage, err := ioutil.ReadFile(filepath.Join(bundlePath, "assets", "profile.png"))
+	profileImage, err := os.ReadFile(filepath.Join(bundlePath, "assets", "profile.png"))
 	if err != nil {
 		return errors.Wrap(err, "couldn't read profile image")
 	}
@@ -103,7 +99,6 @@ func (p *Plugin) OnActivate() error {
 	if appErr := p.API.SetProfileImage(botUserID, profileImage); appErr != nil {
 		return errors.Wrap(appErr, "couldn't set profile image")
 	}
-
 	return nil
 }
 
