@@ -3,18 +3,16 @@
 
 import * as crypto from 'crypto';
 
-import {Client4} from 'mattermost-redux/client';
-import {ClientError} from 'mattermost-redux/client/client4';
 
-import {getSettings} from '../actions';
+import {PluginSettings} from '../actions';
+import {doPost} from '.'
+
+
 
 export default class Client {
-    async getConfigSettings() {
-        return getSettings();
-    }
-
-    startMeeting = async () => {
-        const settings = await this.getConfigSettings();
+    
+    public async startMeeting(settings:PluginSettings) :Promise<any>{
+    
         const nonce = Math.round(Date.now() / 1000);
         const path = '/api/token';
         const myRoomId = settings.prefix + ':TheRoom';
@@ -52,7 +50,7 @@ export default class Client {
             },
         };
         const data = JSON.stringify(body);
-        const hash = crypto.
+        const hash:any = crypto.
             createHash('sha256').
             update(`${path}:${data}:${nonce}`).
             digest('hex');
@@ -77,24 +75,3 @@ export default class Client {
     };
 }
 
-export const doPost = async (url, body, headers = {}) => {
-    const options = {
-        method: 'post',
-        body,
-        headers,
-    };
-
-    const response = await fetch(url, Client4.getOptions(options));
-
-    if (response.ok) {
-        return response.json();
-    }
-
-    const text = await response.text();
-
-    throw new ClientError(Client4.url, {
-        message: text || '',
-        status_code: response.status,
-        url,
-    });
-};

@@ -21,6 +21,7 @@ const (
 	routeAPI             = "/api/v2"
 	routeInstancePath    = "/instance/{id}"
 	routeAPISettingsInfo = "/settingsinfo"
+	routeAPIStartMeeting = "/startMeeting"
 )
 
 const routePrefixInstance = "instance"
@@ -39,6 +40,7 @@ func (p *Plugin) initializeRouter() {
 	// User APIs
 
 	apiRouter.HandleFunc(routeAPISettingsInfo, p.checkAuth(p.handleResponse(p.httpGetSettingsInfo))).Methods(http.MethodGet)
+	apiRouter.HandleFunc(routeAPIStartMeeting, p.checkAuth(p.handleResponse(p.handleStartMeeting))).Methods(http.MethodPost)
 }
 
 //nolint:golint,revive

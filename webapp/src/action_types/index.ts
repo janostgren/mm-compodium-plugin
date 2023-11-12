@@ -6,5 +6,6 @@ import {id as PluginId} from '../manifest';
 export default {
 
     RECEIVED_PLUGIN_SETTINGS: `${PluginId}_plugin_settings`,
+    START_MEETING: `${PluginId}_start_meeting`,
 
 };
