@@ -1,10 +1,11 @@
 import { GlobalState } from 'mattermost-redux/types/store';
 
+import { PostTypes } from 'mattermost-redux/action_types';
+
 import { getPluginServerRoute } from '../selectors';
 import ActionTypes from '../action_types';
-import {PostTypes} from 'mattermost-redux/action_types';
-import { doFetch,doPost } from '../client';
-import Client from '../client/client'
+import { doFetch, doPost } from '../client';
+import Client from '../client/client';
 
 export interface PluginSettings {
     compodium_api_url: string,
@@ -14,10 +15,10 @@ export interface PluginSettings {
     user_id: string
 }
 
-const client:Client =new Client()
+const client: Client = new Client();
 
-export function getSettings():PluginSettings {
-    const settings:any=async (dispatch: (arg0: { type: any; data: any; }) => void, getState: () => GlobalState) => {
+export function getSettings(): PluginSettings {
+    const settings: any = async (dispatch: (arg0: { type: any; data: any; }) => void, getState: () => GlobalState) => {
         let data;
         const baseUrl = getPluginServerRoute(getState());
         try {
@@ -30,31 +31,33 @@ export function getSettings():PluginSettings {
                 data,
             });
         } catch (error) {
-            return {error};
+            return { error };
         }
 
         return data;
     };
-    return <PluginSettings> settings
-    
+    return <PluginSettings>settings;
 }
 
 export function startMeeting() {
-    return async (dispatch: (arg0: { type: any; data: any;channelId:string }) => void, getState: () => GlobalState) => {
+    const ret:any=async (dispatch: (arg0: { type: any; data: any; channelId: string }) => void, getState: () => GlobalState) => {
         let data;
         const baseUrl = getPluginServerRoute(getState());
-        const channelId= getState().entities.channels.currentChannelId
+        const channelId = getState().entities.channels.currentChannelId;
         try {
-
-            const meetingInfo:any = await client.startMeeting(getSettings())
-            if( meetingInfo.url) {
+            const meetingInfo: any = await client.startMeeting(getSettings());
+            if (meetingInfo.url) {
                 window.open(meetingInfo.url);
             }
 
-            data = await doPost(`${baseUrl}/api/v2/startMeeting`, {MeetingUrl: meetingInfo.url,ChannelID: channelId});
-           
+            data = await doPost(`${baseUrl}/api/v2/startMeeting`, { MeetingUrl: meetingInfo.url, ChannelID: channelId });
+            dispatch({
+                type: ActionTypes.START_MEETING,
+                data: data,
+                channelId,
 
-        } catch (error:any) {
+            });
+        } catch (error: any) {
             let m = error.message;
             if (error.message && error.message[0] === '{') {
                 const e = JSON.parse(error.message);
@@ -86,14 +89,13 @@ export function startMeeting() {
             dispatch({
                 type: PostTypes.RECEIVED_NEW_POST,
                 data: post,
-                channelId: channelId
-        
-            });
-           
-        
-            return {error};
-        }
+                channelId,
 
+            });
+
+            return { error };
+        }
         return data;
-    };
+    }
+    return ret
 }

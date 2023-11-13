@@ -3,16 +3,12 @@
 
 import * as crypto from 'crypto';
 
-
 import {PluginSettings} from '../actions';
-import {doPost} from '.'
 
-
+import {doPost} from '.';
 
 export default class Client {
-    
-    public async startMeeting(settings:PluginSettings) :Promise<any>{
-    
+    public async startMeeting(settings:PluginSettings) :Promise<any> {
         const nonce = Math.round(Date.now() / 1000);
         const path = '/api/token';
         const myRoomId = settings.prefix + ':TheRoom';
@@ -70,8 +66,7 @@ export default class Client {
             'X-Vidicue-Key': settings.api_key,
         };
 
-        const res = await doPost(`${settings.compodium_api_url}${path}`, data, headers);
-        return res;
-    };
+        return doPost(`${settings.compodium_api_url}${path}`, data, headers);
+    }
 }
 

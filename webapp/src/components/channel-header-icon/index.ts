@@ -8,7 +8,7 @@ import {isMinimumServerVersion} from 'mattermost-redux/utils/helpers';
 
 import ChannelHeaderIcon from './channel-header-icon';
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state:any, ownProps:any) {
     return {
         ...ownProps,
         useSVG: !isMinimumServerVersion(getServerVersion(state), 5, 24),

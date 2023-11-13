@@ -35,7 +35,6 @@ type startMeetingRequest struct {
 }
 
 func (p *Plugin) postMeeting(creatorUsername string, meetingURL string, channelID string) (*model.Post, *model.AppError) {
-
 	post := &model.Post{
 		UserId:    p.botUserID,
 		ChannelId: channelID,
@@ -50,7 +49,6 @@ func (p *Plugin) postMeeting(creatorUsername string, meetingURL string, channelI
 }
 
 func (p *Plugin) handleStartMeeting(w http.ResponseWriter, r *http.Request) (int, error) {
-
 	userID := r.Header.Get("Mattermost-User-Id")
 	if userID == "" {
 		http.Error(w, "Not authorized", http.StatusUnauthorized)

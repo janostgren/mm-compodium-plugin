@@ -4,13 +4,11 @@
 import {Client4} from 'mattermost-redux/client';
 import {ClientError} from 'mattermost-redux/client/client4';
 
-
 export const doFetch = async (url:string, options = {}) => {
     const response = await fetch(url, Client4.getOptions(options));
 
-   
     if (response.ok) {
-        return response.json();        
+        return response.json();
     }
 
     const data = await response.text();
@@ -22,14 +20,13 @@ export const doFetch = async (url:string, options = {}) => {
     });
 };
 
-export const doPost = async (url:string , body:any, headers = {}) => {
+export const doPost = async (url:string, body:any, headers = {}) => {
     const options = {
         method: 'post',
         body,
         headers,
     };
 
-    return await doFetch(url,options)
-
+    return doFetch(url, options);
 };
 
